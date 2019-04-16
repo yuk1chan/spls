@@ -1,0 +1,92 @@
+\documentclass[a4paper,16pt]{jsarticle}
+
+% 余白の設定
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% パッケージ
+\usepackage[dvipdfmx]{hyperref,graphicx}		% 画像
+\hypersetup{
+	colorlinks=true, % リンクに色をつけない設定
+	bookmarks=true, % 以下ブックマークに関する設定
+	bookmarksnumbered=true,
+	pdfborder={0 0 0},
+	bookmarkstype=toc
+}
+\usepackage{amsmath, amssymb}		% ギリシャ文字
+\usepackage{bm}				% 数式　\bm{a} aベクトル
+\usepackage{comment}			% コメント
+\usepackage{siunitx}			% SI単位
+\usepackage{framed}			% 枠組み
+\usepackage{braket}     % ブラケット記法
+
+\newtheorem{theorem}{定理}
+\newtheorem{proof}{証明}
+\newcommand{\qed}{\qquad $\blacksquare$}
+
+\begin{comment}
+　複数行に渡るコメントの書き方
+　\usepackage{comment}が必要。
+\end{comment}
+
+% section前に改ページ
+\makeatletter
+\def\section{\newpage\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large\bf}}
+\makeatother
+
+% 数式番号をいい感じに
+\makeatletter
+% \renewcommand{\theequation}{\arabic{chapter}-\arabic{section}-\arabic{equation}}
+	\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+  \@addtoreset{equation}{section}
+\makeatother
+
+\title{Ex02}
+\author{ゆきちゃん}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+	\item The input step signal $x(t)$ and the impulse response $h(t)$ of a continuous time LT$1$ system are given by
+	\begin{equation}
+		x(t) = u(t),~~~~h(t) = e^{-\alpha t}u(t),~~~~\alpha > 0
+	\end{equation}
+\end{itemize}
+
+\begin{enumerate}
+	\item Compute the output $y(t) = x(t)*h(t) = \int_{-\infty}^\infty x(\tau)h(t-\tau) d\tau$
+\end{enumerate}
+
+Answer:
+
+\begin{align}
+	y(t) &= \int_{-\infty}^\infty x(\tau)h(t-\tau) d\tau \\
+	&= \int_{-\infty}^\infty u(\tau)e^{-\alpha (t-\tau)}u(t-\tau) d\tau \\
+	&= \int_{-\infty}^\infty e^{-\alpha (t-\tau)}u(\tau)u(t-\tau) d\tau
+\end{align}
+
+$t < 0$の時、
+$u(\tau)u(t-\tau) = 0$なので、$y(t) = 0$
+
+$0 \leq t$の時、
+\begin{equation*}
+	u(\tau)u(t-\tau) =
+	\begin{cases}
+		1 & (0 \leq \tau \leq t) \\
+		0 & otherwise
+	\end{cases}
+\end{equation*}
+よって、
+\begin{align}
+	y(t) &= \int_0^t e^{-\alpha (t-\tau)} d\tau \\
+	&= \dfrac{1}{\alpha}[ 1 - e^{-\alpha t}]
+\end{align}
+
+\end{document}
