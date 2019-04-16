@@ -1,0 +1,102 @@
+\documentclass[a4paper,16pt]{jsarticle}
+
+% 余白の設定
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% パッケージ
+\usepackage[dvipdfmx]{hyperref,graphicx}		% 画像
+\hypersetup{
+	colorlinks=true, % リンクに色をつけない設定
+	bookmarks=true, % 以下ブックマークに関する設定
+	bookmarksnumbered=true,
+	pdfborder={0 0 0},
+	bookmarkstype=toc
+}
+\usepackage{amsmath, amssymb}		% ギリシャ文字
+\usepackage{bm}				% 数式　\bm{a} aベクトル
+\usepackage{comment}			% コメント
+\usepackage{siunitx}			% SI単位
+\usepackage{framed}			% 枠組み
+\usepackage{braket}     % ブラケット記法
+
+\newtheorem{theorem}{定理}
+\newtheorem{proof}{証明}
+\newcommand{\qed}{\qquad $\blacksquare$}
+
+\begin{comment}
+　複数行に渡るコメントの書き方
+　\usepackage{comment}が必要。
+\end{comment}
+
+% section前に改ページ
+\makeatletter
+\def\section{\newpage\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large\bf}}
+\makeatother
+
+% 数式番号をいい感じに
+\makeatletter
+% \renewcommand{\theequation}{\arabic{chapter}-\arabic{section}-\arabic{equation}}
+	\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+  \@addtoreset{equation}{section}
+\makeatother
+
+\title{Ex03}
+\author{ゆきちゃん}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+	\item The unit step sequence input $x[n]$ and the impulse response $h[n]$ of a discrete-time LT$1$ system are given by
+	\begin{equation}
+		x[n] = u[n],~~~~h[n] = \alpha^n u[n],~~~0<\alpha<1
+	\end{equation}
+\end{itemize}
+
+Hint:
+\begin{equation}
+	\sum_{n=0}^{N-1} \alpha^n =
+	\begin{cases}
+		\dfrac{1-\alpha^N}{1-\alpha}, & (\alpha \neq 1) \\
+		N, & (\alpha = 1)
+	\end{cases}
+\end{equation}
+
+\begin{enumerate}
+	\item Compute the convolution sum, or the system output $y[n] = x[n]*h[n]$.
+\end{enumerate}
+
+Answer:
+
+\begin{align}
+	y[n] &= x[n]*h[n] \\
+	&= \sum_{m = -\infty}^\infty x[m]h[n-m] \\
+	&= \sum_{m = -\infty}^\infty u[m]\alpha^{n-m}u[n-m] \\
+	&= \sum_{m = 0}^\infty \alpha^{n-m}u[n-m] \\
+\end{align}
+
+$n < m$の時、$y[n] = 0$
+
+$m < n$の時、
+\begin{align}
+	y[n] &= \sum_{m=0}^{n} \alpha^{n-m} \\
+	&= \alpha^n\sum_{m=0}^{n} \alpha^{-m} \\
+	&= \alpha^n\left(\alpha^{-n}+\sum_{m=0}^{n-1}\alpha^{-m}\right) \\
+	&= 1 + \alpha^n \sum_{m=0}^{n-1}\alpha^{-m} \\
+	&= 1 + \alpha^n \dfrac{1-\alpha^{-n}}{1-\alpha^{-1}} \\
+	&= \dfrac{\alpha^n -1}{\alpha -1}
+\end{align}
+したがって
+\begin{equation}
+	y[n] = \dfrac{\alpha^n -1}{\alpha -1}u[n]
+\end{equation}
+
+
+\end{document}
