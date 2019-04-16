@@ -1,0 +1,87 @@
+\documentclass[a4paper,16pt]{jsarticle}
+
+% 余白の設定
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% パッケージ
+\usepackage[dvipdfmx]{hyperref,graphicx}		% 画像
+\hypersetup{
+	colorlinks=true, % リンクに色をつけない設定
+	bookmarks=true, % 以下ブックマークに関する設定
+	bookmarksnumbered=true,
+	pdfborder={0 0 0},
+	bookmarkstype=toc
+}
+\usepackage{amsmath, amssymb}		% ギリシャ文字
+\usepackage{bm}				% 数式　\bm{a} aベクトル
+\usepackage{comment}			% コメント
+\usepackage{siunitx}			% SI単位
+\usepackage{framed}			% 枠組み
+\usepackage{braket}     % ブラケット記法
+
+\newtheorem{theorem}{定理}
+\newtheorem{proof}{証明}
+\newcommand{\qed}{\qquad $\blacksquare$}
+
+\begin{comment}
+　複数行に渡るコメントの書き方
+　\usepackage{comment}が必要。
+\end{comment}
+
+% section前に改ページ
+\makeatletter
+\def\section{\newpage\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large\bf}}
+\makeatother
+
+% 数式番号をいい感じに
+\makeatletter
+% \renewcommand{\theequation}{\arabic{chapter}-\arabic{section}-\arabic{equation}}
+	\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+  \@addtoreset{equation}{section}
+\makeatother
+
+\title{Ex06}
+\author{ゆきちゃん}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+	\item Given a signal $x(t)$
+	\begin{equation}
+		x(t) = e^{-3t}u(t) + e^{2t}u(-t)
+	\end{equation}
+\end{itemize}
+
+\begin{enumerate}
+	\item Find the Laplace transform $X(s)$
+	\item Sketch the pole-zero plot with ROC
+\end{enumerate}
+
+Answer:
+
+\begin{align}
+	X(s) &= \mathcal{L}[x(t)] \\
+	&= \int_{-\infty}^\infty x(t) e^{-st} dt \\
+	&= \int_0^\infty e^{-3t}e^{-st} dt + \int_{\infty}^0 e^{2t}e^{-st}dt \\
+	&= \int_0^\infty e^{-(3+s)t} dt + \int_{\infty}^0 e^{(2-s)t}dt \\
+	&= -\dfrac{1}{3+s}[e^{-(3+s)t}]_0^\infty + \dfrac{1}{2-s}[e^{(2-s)t}]_{-\infty}^0 \\
+	&= \dfrac{1}{3+s} + \dfrac{1}{2-s}
+\end{align}
+
+これより、$s$の範囲は
+
+\begin{equation}
+	-3 < s < 2
+\end{equation}
+
+この条件でplotすれば良い。
+
+\end{document}
