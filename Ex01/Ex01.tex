@@ -1,0 +1,95 @@
+\documentclass[a4paper,16pt]{jsarticle}
+
+% 余白の設定
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% パッケージ
+\usepackage[dvipdfmx]{hyperref,graphicx}		% 画像
+\hypersetup{
+	colorlinks=true, % リンクに色をつけない設定
+	bookmarks=true, % 以下ブックマークに関する設定
+	bookmarksnumbered=true,
+	pdfborder={0 0 0},
+	bookmarkstype=toc
+}
+\usepackage{amsmath, amssymb}		% ギリシャ文字
+\usepackage{bm}				% 数式　\bm{a} aベクトル
+\usepackage{comment}			% コメント
+\usepackage{siunitx}			% SI単位
+\usepackage{framed}			% 枠組み
+\usepackage{braket}     % ブラケット記法
+
+\newtheorem{theorem}{定理}
+\newtheorem{proof}{証明}
+\newcommand{\qed}{\qquad $\blacksquare$}
+
+\begin{comment}
+　複数行に渡るコメントの書き方
+　\usepackage{comment}が必要。
+\end{comment}
+
+% section前に改ページ
+\makeatletter
+\def\section{\newpage\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large\bf}}
+\makeatother
+
+% 数式番号をいい感じに
+\makeatletter
+% \renewcommand{\theequation}{\arabic{chapter}-\arabic{section}-\arabic{equation}}
+	\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+  \@addtoreset{equation}{section}
+\makeatother
+
+\title{Ex01}
+\author{ゆきちゃん}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\begin{itemize}
+	\item Let $x(t)$ be the complex exponential signal $x(\tau) = e^{j\omega_0 t}$ with radian frequency $\omega_0$ and fundamental period $T_0 = \dfrac{2\pi}{\omega_0}$.
+	\item Consider the discrete-time signal $x[n]$ obtained by uniform sampling of $x(t)$ with sampling interval $T_s$. That is, $x[n] = x(nT_s) = e^{j\omega_0 n T_s}$.
+	\item Find the condition on the value of $T_s$, so that $x[n]$ is preiodic.
+\end{itemize}
+
+answer:(maybe)
+
+$x[n] = x[n + mT_0]$となればいいはず？なので、
+
+\begin{align}
+	x[n + mT_0]
+	&= x((n+mT_0)T_s) \\
+	&= e^{j\omega_0(n+mT_0)T_s} \\
+	&= e^{j\omega_0nT_s}e^{j\omega_0mT_0T_s} \\
+	&= e^{j\omega_0nT_s} \\
+	&= x[n]
+\end{align}
+
+つまり、
+\begin{equation}
+	e^{j\omega_0mT_0T_s} = 1 = e^{j2\pi k}
+\end{equation}
+
+よって、
+\begin{equation}
+	\omega_0mT_0T_s = 2\pi k
+\end{equation}
+
+したがって
+\begin{equation}
+	T_s = \dfrac{2\pi k}{\omega_0mT_0}
+\end{equation}
+
+ただし、$m,k$は整数
+
+多分...
+
+\end{document}
