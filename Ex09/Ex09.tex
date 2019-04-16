@@ -1,0 +1,117 @@
+\documentclass[a4paper,16pt]{jsarticle}
+
+% 余白の設定
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% パッケージ
+\usepackage[dvipdfmx]{hyperref,graphicx}		% 画像
+\hypersetup{
+	colorlinks=true, % リンクに色をつけない設定
+	bookmarks=true, % 以下ブックマークに関する設定
+	bookmarksnumbered=true,
+	pdfborder={0 0 0},
+	bookmarkstype=toc
+}
+\usepackage{amsmath, amssymb}		% ギリシャ文字
+\usepackage{bm}				% 数式　\bm{a} aベクトル
+\usepackage{comment}			% コメント
+\usepackage{siunitx}			% SI単位
+\usepackage{framed}			% 枠組み
+\usepackage{braket}     % ブラケット記法
+
+\newtheorem{theorem}{定理}
+\newtheorem{proof}{証明}
+\newcommand{\qed}{\qquad $\blacksquare$}
+
+\begin{comment}
+　複数行に渡るコメントの書き方
+　\usepackage{comment}が必要。
+\end{comment}
+
+% section前に改ページ
+\makeatletter
+\def\section{\newpage\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large\bf}}
+\makeatother
+
+% 数式番号をいい感じに
+\makeatletter
+% \renewcommand{\theequation}{\arabic{chapter}-\arabic{section}-\arabic{equation}}
+	\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+  \@addtoreset{equation}{section}
+\makeatother
+
+\title{Ex09}
+\author{ゆきちゃん}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+	\item Given a causal discrete-time LT$1$ system $y[n]-\frac{3}{4}y[n-1]+\frac{1}{8}y[n-2] = x[n]$, where $x[n]$ and $y[n]$ are the input and output of the system, respectively.
+\end{itemize}
+\begin{enumerate}
+	\item Determine the transfer function $H(z)$
+	\item Find its impulse response $h[n]$
+	\item Fint its step response $s[n]$
+\end{enumerate}
+
+Answer:
+
+\begin{enumerate}
+	\item Taking the z-transform of the system equation, we have
+	\begin{equation}
+		Y(z) - \dfrac{3}{4}z^{-1}Y(z) + \dfrac{1}{8}z^{-2}Y(z) = X(z)
+	\end{equation}
+	Thus,
+	\begin{equation}
+		H(z) = \dfrac{Y(z)}{X(z)} = \dfrac{z^2}{(z-\frac{1}{2})(z-\frac{1}{4})}
+	\end{equation}
+
+	\item Using partial-fraction expansion, we have
+	\begin{equation}
+		\dfrac{H(z)}{z} = \dfrac{z}{(z-\frac{1}{2})(z-\frac{1}{4})} = \dfrac{c_1}{z-\frac{1}{2}} + \dfrac{c_2}{z-\frac{1}{4}}
+	\end{equation}
+	where, $c_1 = 2$,$c_2 = -1$
+
+	Thus,
+	\begin{equation}
+		H(z) = \dfrac{2z}{z-\frac{1}{2}} - \dfrac{z}{z-\frac{1}{4}} = \dfrac{2}{1-\frac{1}{2}z^{-1}} - \dfrac{1}{1-\frac{1}{4}z^{-1}}
+	\end{equation}
+	Taking the inverse z-transform
+	\footnote{$z[a^nu[n]] = \dfrac{1}{1-az^{-1}},~(|z| > |a|)$}
+	of $H(z)$, we get
+	\begin{equation}
+		h(n) = 2\left(\dfrac{1}{2}\right)^n u[n] - \left(\dfrac{1}{4}\right)^n u[n]
+	\end{equation}
+
+	\item From the table in slide P19, we have the z-transform pair for step signal $x[n] = u[n] \overset{zT}{\iff} X(z) = \dfrac{z}{z-1}$
+	Thus, the steo response
+	\begin{equation}
+		Y(z) = H(z)X(z) = \dfrac{2z^2}{(z-\frac{1}{2})(z-1)} - \dfrac{z^2}{(z-\frac{1}{4})(z-1)}
+	\end{equation}
+	Using partial-fraction expansion, we have
+	\begin{align}
+		\dfrac{Y(z)}{z} &= \dfrac{2z}{(z-\frac{1}{2})(z-1)} - \dfrac{z}{(z-\frac{1}{4})(z-1)} \\
+		&= \dfrac{c_1}{z-\frac{1}{2}} + \dfrac{c_2}{z-1} + \dfrac{c_3}{z-\frac{1}{4}}
+	\end{align}
+	where, $c_1 = -2, c_2 = \dfrac{8}{3}, c_3 = \dfrac{1}{3}$
+
+	Thus,
+	\begin{equation}
+		Y(z) = 	\dfrac{-2z}{z-\frac{1}{2}} + \dfrac{8z}{(3(z-1)} + \dfrac{z}{3(z-\frac{1}{4})}
+	\end{equation}
+	Taking the inverse z-transform of $Y(z)$, we obtain the step response $s[n]$
+	\begin{equation}
+		s[n] = y[n] = -2\left(\dfrac{1}{2}\right)^n u[n] + \dfrac{8}{3}u[n] + \dfrac{1}{3} \left(\dfrac{1}{4}\right)^n u[n]
+	\end{equation}
+\end{enumerate}
+
+
+\end{document}
