@@ -1,0 +1,87 @@
+\documentclass[a4paper,16pt]{jsarticle}
+
+% 余白の設定
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% パッケージ
+\usepackage[dvipdfmx]{hyperref,graphicx}		% 画像
+\hypersetup{
+	colorlinks=true, % リンクに色をつけない設定
+	bookmarks=true, % 以下ブックマークに関する設定
+	bookmarksnumbered=true,
+	pdfborder={0 0 0},
+	bookmarkstype=toc
+}
+\usepackage{amsmath, amssymb}		% ギリシャ文字
+\usepackage{bm}				% 数式　\bm{a} aベクトル
+\usepackage{comment}			% コメント
+\usepackage{siunitx}			% SI単位
+\usepackage{framed}			% 枠組み
+\usepackage{braket}     % ブラケット記法
+
+\newtheorem{theorem}{定理}
+\newtheorem{proof}{証明}
+\newcommand{\qed}{\qquad $\blacksquare$}
+
+\begin{comment}
+　複数行に渡るコメントの書き方
+　\usepackage{comment}が必要。
+\end{comment}
+
+% section前に改ページ
+\makeatletter
+\def\section{\newpage\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large\bf}}
+\makeatother
+
+% 数式番号をいい感じに
+\makeatletter
+% \renewcommand{\theequation}{\arabic{chapter}-\arabic{section}-\arabic{equation}}
+	\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+  \@addtoreset{equation}{section}
+\makeatother
+
+\title{Ex05}
+\author{ゆきちゃん}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+	\item Given the Fourier transform $X(\omega)$ of $x[n]$
+	\begin{equation}
+		X(\omega) = \dfrac{1}{(1-ae^{-j\omega})^2},~~~~|a| < 1
+	\end{equation}
+\end{itemize}
+\begin{enumerate}
+	\item Find the inverse Fourier transform $x[n]$
+\end{enumerate}
+
+Hint:please use the convolution theorem and Fourier transform pair $a^n u[n] \iff \dfrac{1}{1-ae^{-j\omega}}, |a| < 1$
+
+Answer:
+
+\begin{align}
+	x[n] &= \mathcal{F}^{-1}\{\mathcal{F}[a^nu[n]]\mathcal{F}[a^nu[n]]\} \\
+	&= a^nu[n]*a^nu[n] \\
+	&= \sum_{m=-\infty}^\infty a^m u[m]a^{n-m}u[n-m]
+\end{align}
+
+ここで、$u[m]u[n-m] = 1$になるための条件は
+$m \geq 0$かつ$n-m \geq 0$より、$n \geq m \geq 0$であるので、
+
+\begin{align}
+	x[n] &= \sum_{m = 0}^n a^m a^{n-m} \\
+	&= a^n\sum_{m = 0}^n 1 \\
+	&= (n+1)a^n
+\end{align}
+
+
+
+\end{document}
