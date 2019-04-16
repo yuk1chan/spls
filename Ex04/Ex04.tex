@@ -1,0 +1,92 @@
+\documentclass[a4paper,16pt]{jsarticle}
+
+% 余白の設定
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% パッケージ
+\usepackage[dvipdfmx]{hyperref,graphicx}		% 画像
+\hypersetup{
+	colorlinks=true, % リンクに色をつけない設定
+	bookmarks=true, % 以下ブックマークに関する設定
+	bookmarksnumbered=true,
+	pdfborder={0 0 0},
+	bookmarkstype=toc
+}
+\usepackage{amsmath, amssymb}		% ギリシャ文字
+\usepackage{bm}				% 数式　\bm{a} aベクトル
+\usepackage{comment}			% コメント
+\usepackage{siunitx}			% SI単位
+\usepackage{framed}			% 枠組み
+\usepackage{braket}     % ブラケット記法
+
+\newtheorem{theorem}{定理}
+\newtheorem{proof}{証明}
+\newcommand{\qed}{\qquad $\blacksquare$}
+
+\begin{comment}
+　複数行に渡るコメントの書き方
+　\usepackage{comment}が必要。
+\end{comment}
+
+% section前に改ページ
+\makeatletter
+\def\section{\newpage\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large\bf}}
+\makeatother
+
+% 数式番号をいい感じに
+\makeatletter
+% \renewcommand{\theequation}{\arabic{chapter}-\arabic{section}-\arabic{equation}}
+	\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+  \@addtoreset{equation}{section}
+\makeatother
+
+\title{Ex03}
+\author{ゆきちゃん}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+	\item Given a rectangular pulse sugnal $x(t)$ defined by
+	\begin{equation}
+		x(t) =
+		\begin{cases}
+			1, & |t| < \alpha \\
+			0, & |t| > \alpha
+		\end{cases}
+	\end{equation}
+\end{itemize}
+
+\begin{enumerate}
+	\item Find the Fourier transform $X(\omega)$ of $x(t)$
+\end{enumerate}
+
+Answer:
+\begin{align}
+	X(\omega) &= \mathcal{F}[x(t)] \\
+	&= \int_{-\infty}^\infty x(t) e^{-j\omega t}dt \\
+	&= \int_{-a}^a e^{-j\omega t}dt
+\end{align}
+
+$\omega = 0$の時
+\begin{align}
+	X(\omega) &= \int_{-a}^a dt \\
+	&= 2a
+\end{align}
+
+$\omega \neq 0$の時
+\begin{align}
+	X(\omega) &= \left[\dfrac{1}{-j\omega} e^{-j\omega t}\right]_{-a}^a\\
+	&= \dfrac{1}{-j\omega}\left(e^{-j\omega a} - e^{j\omega a}\right) \\
+	&= \frac{2}{\omega} \sin(\omega a) \\
+	&= 2a \mathrm{sinc}(\omega a)
+\end{align}
+
+\end{document}
