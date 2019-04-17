@@ -1,0 +1,90 @@
+\documentclass[a4paper,16pt]{jsarticle}
+
+% 余白の設定
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% パッケージ
+\usepackage[dvipdfmx]{hyperref,graphicx}		% 画像
+\hypersetup{
+	colorlinks=true, % リンクに色をつけない設定
+	bookmarks=true, % 以下ブックマークに関する設定
+	bookmarksnumbered=true,
+	pdfborder={0 0 0},
+	bookmarkstype=toc
+}
+\usepackage{amsmath, amssymb}		% ギリシャ文字
+\usepackage{bm}				% 数式　\bm{a} aベクトル
+\usepackage{comment}			% コメント
+\usepackage{siunitx}			% SI単位
+\usepackage{framed}			% 枠組み
+\usepackage{braket}     % ブラケット記法
+
+\newtheorem{theorem}{定理}
+\newtheorem{proof}{証明}
+\newcommand{\qed}{\qquad $\blacksquare$}
+
+\begin{comment}
+　複数行に渡るコメントの書き方
+　\usepackage{comment}が必要。
+\end{comment}
+
+% section前に改ページ
+\makeatletter
+\def\section{\newpage\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3 ex plus .2ex}{\Large\bf}}
+\makeatother
+
+% 数式番号をいい感じに
+\makeatletter
+% \renewcommand{\theequation}{\arabic{chapter}-\arabic{section}-\arabic{equation}}
+	\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+  \@addtoreset{equation}{section}
+\makeatother
+
+\title{Ex10}
+\author{ゆきちゃん}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+	\item Given a unit sample response of an FIR filter si
+	\begin{equation}
+		h[n] =
+		\begin{cases}
+			\alpha^n, & 0 \leq n \leq 6 \\
+			0,        & otherwise
+		\end{cases}
+	\end{equation}
+\end{itemize}
+
+\begin{enumerate}
+	\item Draw the direct form implementation of this filter
+	\item Show that the corresponding transfer function is
+	\begin{equation}
+		H(z) = \dfrac{1 - \alpha^7 z{-7}}{1 - \alpha z^{-1}}
+	\end{equation}
+\end{enumerate}
+
+Answer:
+
+\begin{enumerate}
+	\item 略
+	\item The transfer function is,
+	\begin{align}
+		H(z) &= \sum_{n=-\infty}^\infty h[n]z^{-n} \\
+		&= \sum_{n=0}^{6} \alpha^n z^{-n} \\
+		&= 1 + \sum_{n=1}^{6} \alpha^n z^{-n} \\
+		&= 1 + \sum_{n=1}^{6} \dfrac{\alpha}{z}\left(\dfrac{\alpha}{z}\right)^{n-1} \\
+		&= 1 + \dfrac{\frac{\alpha}{z}(1-(\frac{\alpha}{z})^6)}{1-\frac{\alpha}{z}} \\
+		&= \dfrac{1-\alpha^7 z^{-7}}{1-\alpha z^{-1}}
+	\end{align}
+\end{enumerate}
+
+\end{document}
